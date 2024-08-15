@@ -1,0 +1,61 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.title {
+    text-align: center;
+    font-size: 2rem;
+    margin-top: 20px;
+}
+
+.carousel-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.carousel-image {
+    display: none;
+    width: 70%;
+    border: 2px solid #000;
+}
+
+.carousel-image.active {
+    display: block;
+}
+
+.story-map-button {
+    display: block;
+    width: 200px;
+    margin: 0 auto;
+    padding: 10px;
+    text-align: center;
+    background-color: #007BFF;
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+    border-radius: 5px;
+}
+
+
+
+#story {
+    padding: 20px;
+}
+
+.event {
+    margin-bottom: 20px;
+}
+
+.blue-heading {
+    color: #007BFF;
+}
+
+.resized-image {
+    width: 100%;
+    max-width: 600px; /* Set a consistent max width for all images */
+    height: auto; /* Maintain aspect ratio */
+}

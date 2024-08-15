@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Climate Effects on Water Extents in Thika</title>
+
+    <!-- Load Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <!-- Load jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Load Font-Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <!-- Load leaflet.extra-markers -->
+    <link rel="stylesheet" href="markers/leaflet.extra-markers.min.css">
+    <script src="markers/leaflet.extra-markers.min.js"></script>
+
+    <!-- Load custom styles -->
+    <link rel="stylesheet" href="style.css">
+     
+    <style>
+        /* Custom styles for the page */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        #story {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .blue-heading {
+            color: #003366;
+            border-bottom: 2px solid #003366;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .black-heading {
+            color: palegreen;
+            border-bottom: 2px solid #003366;
+            padding-bottom: 9px;
+            margin-bottom: 19px;
+        }
+
+        #map1, #map2 {
+            height: 500px;
+            border: 2px solid #ccc;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        .resized-image {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .event {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .event h2 {
+            margin-top: 0;
+        }
+
+        .event img {
+            display: block;
+            margin: 10px 0;
+        }
+
+        .leaflet-popup-content img {
+            max-width: 200px;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        .leaflet-popup-content {
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="story">
+        <h2 class="blue-heading">Location of Thika Catchment</h2>
+        
+        <!-- Map Container -->
+        <div id="map" style="height: 600px;"></div>
+        
+        <section class="event" data-lat="-1.05" data-lng="37.14" data-zoom="11">
+            <h2 class="blue-heading">Digital Elevation Model (DEM)</h2>
+            <p>Elevation in Metres.</p>
+            <img src="image.png" alt="DEM of Thika Catchment" class="resized-image">
+        </section>
+        <section class="event" data-lat="-1.05" data-lng="37.14" data-zoom="12">
+            <h2 class="blue-heading">Scene of the Area</h2>
+            <p>Satellite image of the Thika catchment area.</p>
+            <img src="image6.png" alt="Scene of Thika Catchment" class="resized-image">
+        </section>
+        
+        <!-- Second Map Section -->
+        <section class="event" data-lat="-1.05" data-lng="37.14" data-zoom="12">
+            <h2 class="blue-heading">Locations of the dam and irrigation schemes</h2>
+            <h3 class='black-heading'> Ndakaini and Sasumua</h3>
+            <p>These dams which provide water for  84% of the total population in the county's capital have been experiencing decreased water levels due to climate and sedimentation effects</p>
+            <h3 class="black-heading"> Plantations</h3>
+            <p>Farming practices have been affected and with the reliance on water for irrigation, downstream dams such as Masinga, responsible for HEP production has resulted to low power generation</p>
+            <div id="map2" style="height: 600px;"></div>
+        </section>
+        
+        <section class="event" data-lat="-1.05" data-lng="37.14" data-zoom="12">
+            <h2 class="blue-heading">Temperature Trends</h2>
+            <p>The area has been experiencing significant rise in temperature over the past 3 decades </p>
+            <img src="image3.png" alt="Temperature and Rainfall Trends" class="resized-image">
+        </section>
+        <section class="event" data-lat="-1.05" data-lng="37.14" data-zoom="12">
+            <h2 class="blue-heading">Rainfall Trends</h2>
+            <p>Variation in rainfall patterns over the years.</p>
+            <img src="image5.png" alt="Temperature and Rainfall Trends" class="resized-image">
+        </section>
+        <section class="event" data-lat="-1.05" data-lng="37.14" data-zoom="12">
+            <h2 class="blue-heading">Water Extents Over Time</h2>
+            <p>Watch how the water extents have changed over time due to climatic effects.</p>
+            <img src="SWA_timelapse.gif" alt="Water Extents Over Time" class="resized-image">
+        </section>
+        <section class="event">
+            <h2 class="blue-heading">Recommendations</h2>
+            <p>Kenya Forest Services should increase surveillance to monitor the Forest as it is the main catchment area.</p>
+            <p>Farmers should be provided incentives for their role in conservation practices e.g not planting unfriendly tree species such as eucalyptus, which negatively affects the catchment's rivers.</p>
+            <p>The government should adopt a mitigation approach towards climate change and enforce strict regulations on greenhouse gas emissions.</p>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Initialize the first map
+            const map1 = L.map('map').setView([-0.7494466205191976, 36.66669568400297], 10);
+
+            // Add a base layer to the first map
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map1);
+
+            // Add GeoJSON layer for geometry of the area
+            const geometryGeoJSON = {"type":"FeatureCollection","features":[{"type":"Feature","id":1,"geometry":{"type":"Polygon","coordinates":[[[37.178397957019975,-1.051976953084343],[37.180154014569261,-1.0321415018258819],[37.169895504532732,-1.0218354169318293],[37.15728849740438,-1.0099142164927319],[37.143207215460293,-1.0013807794502447],[37.127763842885059,-0.97835118915642794],[37.100289203000429,-0.94060425104998413],[37.084414025256756,-0.91943734791772613],[37.063908587966431,-0.90554656810025791],[37.031496767887546,-0.8817338020464689],[37.012314262560899,-0.87247328191914097],[36.975933647935634,-0.83939999664854958],[36.936907170579502,-0.82286335389012577],[36.913755870339756,-0.82154042234542957],[36.877401714467624,-0.80010893276407391],[36.854118121234116,-0.78529210037394248],[36.83295121845714,-0.77555532543804862],[36.807974272171649,-0.76962859214690149],[36.783844002697741,-0.75565843675253419],[36.777070594559717,-0.74507498504342717],[36.77029718504258,-0.72560143400179733],[36.755903690936911,-0.71205461667595082],[36.746166916055721,-0.70062448904730046],[36.727963379199515,-0.68157427628256007],[36.716956590072463,-0.66675744379071034],[36.711453194479681,-0.64813056973887784],[36.690201624417597,-0.63507482327416498],[36.674487315632717,-0.64564134191495626],[36.651457725444573,-0.65918815982218792],[36.627615325355407,-0.67842464093138533],[36.61000446236217,-0.70335078608655599],[36.601085706022239,-0.71523277743821823],[36.592498163868711,-0.72988461955382344],[36.591097027299746,-0.75022277552251748],[36.595527493003303,-0.77002538940497067],[36.60586214185853,-0.78880518604466843],[36.609342115578961,-0.80612528576483489],[36.611176783041159,-0.82041574318492227],[36.614042186257215,-0.83936486808709854],[36.619244559228555,-0.8499239604187051],[36.633874084911028,-0.84404855798935785],[36.679635105923104,-0.85670076413228535],[36.722172114602067,-0.87214413725516626],[36.763083504545385,-0.88135597339803529],[36.806975194237019,-0.89300623676587121],[36.831630403291179,-0.90357275450743069],[36.857911230397463,-0.92551859954269289],[36.881851166645696,-0.93704965101806759],[36.897110302231091,-0.9562969694442407],[36.922426595527071,-0.97675808333414538],[36.94843648644283,-0.99513840588603319],[36.996121285303545,-1.019414304248075],[37.033055329654076,-1.0388350216804876],[37.080913527824571,-1.0492389778281344],[37.118194370362801,-1.0587759380761155],[37.146285052202053,-1.0636311172523827],[37.161544187769096,-1.0615503266746169],[37.178397957019975,-1.051976953084343]]]},"properties":{"OBJECTID":1,"Id":0,"Shape_Length":172839.21437998043,"Shape_Area":1045055541.0974312}}]}
+
+            // Add GeoJSON layer to map1
+            L.geoJSON(geometryGeoJSON).addTo(map1);
+
+            // Initialize the second map
+            const map2 = L.map('map2').setView([-0.7494466205191976, 36.66669568400297], 10);
+
+            // Add a base layer to the second map
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map2);
+
+            // Define dam and irrigation locations
+            const locations = [
+                {
+                    "lat": -0.8207854444768168,
+                    "lng":  36.83842798305671,
+                    "name": "Ndakaini Dam",
+                    "description": "A major dam providing water to Nairobi.",
+                    "image": "ndakaini.png"
+                },
+                {
+                    "lat": -0.7494466205191976,
+                    "lng": 36.66669568400297,
+                    "name": "Sasumua dam",
+                    "description": "Dam.",
+                    "image": "sasumua.png"
+                },
+                {
+                    "lat": -1.0309645656715807,
+                    "lng":  37.12052859519007,
+                    "name": "Plantations",
+                    "description": "Del Monte.",
+                    "image": "pineapple.png"
+                }
+            ];
+
+            // Create a layer group for dam and irrigation markers
+            const locationsLayer = L.layerGroup().addTo(map2);
+
+            // Add markers for each location
+            locations.forEach(loc => {
+                const marker = L.marker([loc.lat, loc.lng]).addTo(locationsLayer);
+                marker.bindPopup(`
+                    <h3>${loc.name}</h3>
+                    <p>${loc.description}</p>
+                    <img src="${loc.image}" alt="${loc.name}" style="width:100%;height:auto;">
+                `);
+            });
+
+            // Event listener for scroll-triggered events
+            document.querySelectorAll('.event').forEach((section) => {
+                const lat = section.getAttribute('data-lat');
+                const lng = section.getAttribute('data-lng');
+                const zoom = section.getAttribute('data-zoom');
+                
+                // Event handler for scrolling
+                $(window).on('scroll', function () {
+                    const sectionTop = $(section).offset().top;
+                    const scrollTop = $(window).scrollTop();
+                    const windowHeight = $(window).height();
+
+                    if (scrollTop + windowHeight > sectionTop && scrollTop < sectionTop + $(section).outerHeight()) {
+                        map1.setView([lat, lng], zoom);
+                        map2.setView([lat, lng], zoom);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
